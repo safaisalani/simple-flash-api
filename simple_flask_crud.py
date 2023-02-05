@@ -40,7 +40,7 @@ class Product(Resource):
         # Create a new product
         data = request.get_json()
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO product_master (name) VALUES (%s)", (data['name']))
+        cur.execute("INSERT INTO product_master (name, description, price) VALUES (%s, %s, %s)", (data['name'], data['description'], data['price']))
         mysql.connection.commit()
         cur.close()
         return {'message': 'Product created successfully'}, 201
@@ -49,7 +49,7 @@ class Product(Resource):
         # Update an existing product
         data = request.get_json()
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE product_master SET name=%s WHERE id=%s", (data['name'], id))
+        cur.execute("UPDATE product_master SET name=%s, description=%s, price=%s WHERE id=%s", (data['name'], data['description'], data['price'], id))
         mysql.connection.commit()
         cur.close()
         return {'message': 'Product updated successfully'}, 200
